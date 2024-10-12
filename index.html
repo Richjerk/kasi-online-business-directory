@@ -15,11 +15,16 @@
             border-radius: 0.5rem;
             padding: 1rem;
             background-color: white;
+            max-height: 400px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
         .chat-message {
             padding: 10px;
             border-radius: 0.5rem;
             margin-bottom: 10px;
+            width: fit-content;
         }
         .user-message {
             background-color: #FFA500; /* Orange background for user messages */
@@ -58,6 +63,7 @@
         body {
             background-color: #f8f8f8; /* Light background */
             color: #333; /* Dark text */
+            font-family: 'Arial', sans-serif;
         }
         .form-input {
             border: 1px solid #ccc;
@@ -87,6 +93,41 @@
         .business-item {
             border-bottom: 1px solid #ddd; /* Light gray border */
             padding: 10px 0;
+            display: flex; /* Align items in a row */
+            align-items: center; /* Center items vertically */
+        }
+        .business-item img {
+            width: 80px; /* Set a fixed width for images */
+            height: 80px; /* Set a fixed height for images */
+            object-fit: cover; /* Crop the image to fit */
+            border-radius: 0.5rem; /* Optional: round corners */
+            margin-right: 10px; /* Space between image and text */
+        }
+
+        /* Additional styling for responsiveness and beauty */
+        header {
+            background-color: #FF8C00;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            font-family: 'Poppins', sans-serif;
+        }
+        nav a {
+            transition: all 0.3s ease-in-out;
+        }
+        nav a:hover {
+            transform: scale(1.1);
+        }
+        section {
+            margin: 40px 0;
+        }
+        section h2 {
+            font-family: 'Poppins', sans-serif;
+            color: #FF8C00;
+        }
+        footer {
+            background-color: #FFA500;
+            color: white;
         }
     </style>
 </head>
@@ -99,6 +140,7 @@
             <a href="#register" class="text-white font-bold hover:underline">Register Business</a>
             <a href="#business-list" class="text-white font-bold hover:underline">Business Listings</a>
             <a href="#map" class="text-white font-bold hover:underline">Map</a>
+            <a href="#contact" class="text-white font-bold hover:underline">Contact Us</a>
         </nav>
     </header>
 
@@ -138,74 +180,104 @@
     <section id="business-list" class="business-list bg-white shadow-md rounded px-8 py-6 mb-10 max-w-xl mx-auto">
         <h2 class="text-center text-2xl font-bold mb-6">Business Listings</h2>
         <div id="listings" class="space-y-4">
-            <!-- Business items will be displayed here -->
+            <!-- Example Business Listings -->
+            <div class="business-item">
+                <img src="https://meta.ai/s/C9kxnyeB41v8Lj6w/" alt="Mama's Kitchen">
+                <div>
+                    <h3 class="font-bold">Mama's Kitchen</h3>
+                    <p>Authentic local cuisine serving fresh and delicious meals daily.</p>
+                    <p><strong>Phone:</strong> +27 83 123 4567</p>
+                    <p><strong>Address:</strong> Link Rd, Orange Farm, Gauteng, South Africa</p>
+                </div>
+            </div>
+            <div class="business-item">
+                <img src="https://meta.ai/s/HVPK8YeK8RHoakDW/" alt="Kasi Barber Shop">
+                <div>
+                    <h3 class="font-bold">The Kasi Barber</h3>
+                    <p>Professional haircuts, shaves, and grooming services for men.</p>
+                    <p><strong>Phone:</strong> +27 81 987 6543</p>
+                    <p><strong>Address:</strong> 4444 Ext2, Orange Farm, Gauteng, South Africa</p>
+                </div>
+            </div>
+            <div class="business-item">
+                <img src="https://meta.ai/s/hzi99qRsaisawT2g/" alt="Eyethu Mall">
+                <div>
+                    <h3 class="font-bold">Eyethu Mall</h3>
+                    <p>Your one-stop shop for all your retail needs.</p>
+                    <p><strong>Phone:</strong> +27 10 222 3344</p>
+                    <p><strong>Address:</strong> Link Street, Orange Farm, Gauteng, South Africa</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chatbot Section -->
+    <section class="chatbot bg-white shadow-md rounded px-8 py-6 mb-10 max-w-xl mx-auto">
+        <h2 class="text-center text-2xl font-bold mb-6">Chat with Our GPT Chatbot</h2>
+        <div id="chatbot" class="chatbot-container">
+            <div class="chat-message bot-message">Hello! How can I assist you today?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="userInput" placeholder="Type your message here..." required>
+            <button id="sendMessage" type="button">Send</button>
         </div>
     </section>
 
     <!-- Map Section -->
-    <section id="map" class="max-w-xl mx-auto">
-        <h2 class="text-center text-2xl font-bold mb-6">Business Locations</h2>
-        <div id="map" class="h-96 w-full bg-gray-300"></div> <!-- Placeholder for the map -->
+    <section id="map" class="bg-white shadow-md rounded px-8 py-6 mb-10 max-w-xl mx-auto">
+        <h2 class="text-center text-2xl font-bold mb-6">Find Us on the Map</h2>
+        <div class="map-container" style="height: 300px; border: 1px solid #ddd;"></div>
     </section>
 
-    <!-- Gemini Chatbot Integration Section -->
-    <section id="gemini-chatbot" class="mt-10 max-w-xl mx-auto">
-        <h2 class="text-center text-2xl font-bold mb-6">Chat with Our Kasi AI</h2>
-        <div class="chatbot-container">
-            <div id="chatDisplay" class="flex flex-col h-64 overflow-auto p-4">
-                <div class="chat-message user-message">Hi there! I need help with my order.</div>
-                <div class="chat-message bot-message">Hello! What assistance do you need with your order?</div>
-                <div class="chat-message user-message">Can you show me my order status?</div>
-                <div class="chat-message bot-message">Sure! Please provide your order number.</div>
+    <!-- Contact Us Section -->
+    <section id="contact" class="bg-white shadow-md rounded px-8 py-6 mb-10 max-w-xl mx-auto">
+        <h2 class="text-center text-2xl font-bold mb-6">Contact Us</h2>
+        <form id="contactForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8" method="post">
+            <div class="mb-4">
+                <label class="form-label" for="contactName">Your Name:</label>
+                <input class="form-input" id="contactName" name="contactName" type="text" placeholder="Enter your name" required>
             </div>
-            <div class="chat-input">
-                <input type="text" id="userInput" placeholder="Type your message here..." required>
-                <button id="sendBtn">Send</button>
+            <div class="mb-4">
+                <label class="form-label" for="contactEmail">Your Email:</label>
+                <input class="form-input" id="contactEmail" name="contactEmail" type="email" placeholder="Enter your email" required>
             </div>
-        </div>
+            <div class="mb-4">
+                <label class="form-label" for="contactMessage">Message:</label>
+                <textarea class="form-input" id="contactMessage" name="contactMessage" placeholder="Enter your message" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-200 text-center py-6 mt-10">
-        <p class="text-gray-700">&copy; 2024 Mafisa Tech Affiliate Pty Ltd. All rights reserved.</p>
+    <footer class="bg-orange-500 p-6 text-center text-white">
+        <p>&copy; 2024 Kasi Online Business Directory. All rights reserved.</p>
     </footer>
 
-    <!-- JavaScript Section -->
     <script>
-        const form = document.getElementById('businessForm');
-        const listingsContainer = document.getElementById('listings');
+        // JavaScript for chatbot functionality
+        document.getElementById('sendMessage').onclick = function() {
+            var userMessage = document.getElementById('userInput').value;
+            if (userMessage) {
+                // Add user message to chat
+                var userMessageDiv = document.createElement('div');
+                userMessageDiv.classList.add('chat-message', 'user-message');
+                userMessageDiv.innerText = userMessage;
+                document.getElementById('chatbot').appendChild(userMessageDiv);
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const formData = new FormData(form);
+                // Simulate bot response (replace with actual API call)
+                setTimeout(function() {
+                    var botMessageDiv = document.createElement('div');
+                    botMessageDiv.classList.add('chat-message', 'bot-message');
+                    botMessageDiv.innerText = 'Thank you for your message: "' + userMessage + '"! How can I assist you further?';
+                    document.getElementById('chatbot').appendChild(botMessageDiv);
+                }, 1000);
 
-            try {
-                const response = await fetch('http://localhost:5000/api/business', {
-                    method: 'POST',
-                    body: formData // Use formData directly to handle file upload
-                });
-
-                if (response.ok) {
-                    const newBusiness = await response.json();
-                    addBusinessToList(newBusiness);
-                    form.reset();
-                } else {
-                    console.error('Error submitting form:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Error:', error);
+                // Clear input field
+                document.getElementById('userInput').value = '';
             }
-        });
-
-        function addBusinessToList(business) {
-            const businessItem = document.createElement('div');
-            businessItem.className = 'business-item border-b pb-4';
-            businessItem.innerHTML = `<strong>${business.name}</strong><p>${business.description}</p>`;
-            listingsContainer.appendChild(businessItem);
-        }
+        };
     </script>
 </body>
 </html>
-
 

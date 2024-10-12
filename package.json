@@ -1,0 +1,25 @@
+{
+  "name": "kasi-online-business-directory",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "jest"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^5.10.9",
+    "@google/generative-ai": "^0.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "vite": "^4.4.5",
+    "eslint": "^8.10.0"
+  }
+}
+
+
+

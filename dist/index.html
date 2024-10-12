@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kasi Online Business Directory is the premier directory for township businesses in South Africa, helping local businesses connect with their community.">
+    <meta name="keywords" content="township business, local business, small business directory, kasi business, South Africa, chatbot, Gemini Chatbot, geo-location">
+    <meta name="author" content="Mafisa Tech Affiliate Pty Ltd">
+    <title>Kasi Online Business Directory</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Chatbot container styles */
+        .chatbot-container {
+            border: 1px solid #FFA500; /* Orange border */
+            border-radius: 0.5rem;
+            padding: 1rem;
+            background-color: white;
+        }
+        .chat-message {
+            padding: 10px;
+            border-radius: 0.5rem;
+            margin-bottom: 10px;
+        }
+        .user-message {
+            background-color: #FFA500; /* Orange background for user messages */
+            color: white;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #f1f1f1; /* Light gray background for bot messages */
+            color: black;
+            align-self: flex-start;
+        }
+        .chat-input {
+            margin-top: 10px;
+            display: flex;
+        }
+        .chat-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+        }
+        .chat-input button {
+            background-color: #FFA500; /* Orange */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .chat-input button:hover {
+            background-color: #FF8C00; /* Darker orange on hover */
+        }
+
+        /* General styles for the website */
+        body {
+            background-color: #f8f8f8; /* Light background */
+            color: #333; /* Dark text */
+        }
+        .form-input {
+            border: 1px solid #ccc;
+            border-radius: 0.5rem;
+            padding: 10px;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .form-label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .submit-btn {
+            background-color: #FFA500; /* Orange */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background-color: #FF8C00; /* Darker orange on hover */
+        }
+        .business-item {
+            border-bottom: 1px solid #ddd; /* Light gray border */
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header -->
+    <header class="bg-orange-500 p-6 text-white text-center">
+        <h1 class="text-3xl font-bold">Kasi Online Business Directory</h1>
+        <nav class="mt-4 flex justify-center space-x-4">
+            <a href="#register" class="text-white font-bold hover:underline">Register Business</a>
+            <a href="#business-list" class="text-white font-bold hover:underline">Business Listings</a>
+            <a href="#map" class="text-white font-bold hover:underline">Map</a>
+        </nav>
+    </header>
+
+    <!-- Register Business Section -->
+    <section id="register" class="mt-10">
+        <h2 class="text-center text-2xl font-bold mb-6">Register Your Business</h2>
+        <form id="businessForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-8 max-w-xl mx-auto" enctype="multipart/form-data">
+            <div class="mb-4">
+                <label class="form-label" for="businessName">Business Name:</label>
+                <input class="form-input" id="businessName" name="businessName" type="text" placeholder="Enter your business name" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="businessDescription">Business Description:</label>
+                <textarea class="form-input" id="businessDescription" name="businessDescription" placeholder="Describe your business" required></textarea>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="businessEmail">Business Email:</label>
+                <input class="form-input" id="businessEmail" name="businessEmail" type="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="businessPhone">Business Phone:</label>
+                <input class="form-input" id="businessPhone" name="businessPhone" type="tel" placeholder="Enter your phone number" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="businessAddress">Business Address:</label>
+                <input class="form-input" id="businessAddress" name="businessAddress" type="text" placeholder="Enter your business address" required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label" for="businessImage">Business Image:</label>
+                <input class="form-input" id="businessImage" name="businessImage" type="file" accept="image/*" required>
+            </div>
+            <button type="submit" class="submit-btn">Submit</button>
+        </form>
+    </section>
+
+    <!-- Business Listings Section -->
+    <section id="business-list" class="business-list bg-white shadow-md rounded px-8 py-6 mb-10 max-w-xl mx-auto">
+        <h2 class="text-center text-2xl font-bold mb-6">Business Listings</h2>
+        <div id="listings" class="space-y-4">
+            <!-- Business items will be displayed here -->
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="map" class="max-w-xl mx-auto">
+        <h2 class="text-center text-2xl font-bold mb-6">Business Locations</h2>
+        <div id="map" class="h-96 w-full bg-gray-300"></div> <!-- Placeholder for the map -->
+    </section>
+
+    <!-- Gemini Chatbot Integration Section -->
+    <section id="gemini-chatbot" class="mt-10 max-w-xl mx-auto">
+        <h2 class="text-center text-2xl font-bold mb-6">Chat with Our Kasi AI</h2>
+        <div class="chatbot-container">
+            <div id="chatDisplay" class="flex flex-col h-64 overflow-auto p-4">
+                <div class="chat-message user-message">Hi there! I need help with my order.</div>
+                <div class="chat-message bot-message">Hello! What assistance do you need with your order?</div>
+                <div class="chat-message user-message">Can you show me my order status?</div>
+                <div class="chat-message bot-message">Sure! Please provide your order number.</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="userInput" placeholder="Type your message here..." required>
+                <button id="sendBtn">Send</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-200 text-center py-6 mt-10">
+        <p class="text-gray-700">&copy; 2024 Mafisa Tech Affiliate Pty Ltd. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript Section -->
+    <script>
+        const form = document.getElementById('businessForm');
+        const listingsContainer = document.getElementById('listings');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(form);
+
+            try {
+                const response = await fetch('http://localhost:5000/api/business', {
+                    method: 'POST',
+                    body: formData // Use formData directly to handle file upload
+                });
+
+                if (response.ok) {
+                    const newBusiness = await response.json();
+                    addBusinessToList(newBusiness);
+                    form.reset();
+                } else {
+                    console.error('Error submitting form:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+
+        function addBusinessToList(business) {
+            const businessItem = document.createElement('div');
+            businessItem.className = 'business-item border-b pb-4';
+            businessItem.innerHTML = `<strong>${business.name}</strong><p>${business.description}</p>`;
+            listingsContainer.appendChild(businessItem);
+        }
+    </script>
+</body>
+</html>
+
+
