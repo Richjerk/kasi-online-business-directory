@@ -26,7 +26,7 @@ app.use(express.static('public', {
 app.use('/uploads', express.static('uploads'));
 
 // MongoDB Connection
-const mongoURI = process.env.MONGODB_URI || 'mongodb://atlas-sql-65edfbe73d7aff59625ae3b6-3q47b.a.query.mongodb.net/myVirtualDatabase?ssl=true&authSource=admin';
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/myVirtualDatabase'; // Default local DB if no env
 
 mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
@@ -94,10 +94,35 @@ app.post('/api/business', upload.single('image'), async (req, res) => {
     }
 });
 
+// Contentful Integration
+const contentful = require('contentful');
+
+// Initialize Contentful client
+const client = contentful.createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+});
+
+// API endpoint to fetch menu data from Contentful
+app.get('/menu', async (req, res) => {
+    try {
+        const entries = await client.getEntries({
+            content_type: 'menuItem'
+        });
+
+        // Return menu data to the frontend
+        res.json(entries.items);
+    } catch (err) {
+        console.error('Error fetching menu from Contentful:', err);
+        res.status(500).send({ message: 'Error fetching menu', error: err });
+    }
+});
+
 // Start the server
-const server = app.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 
 // Export the app for testing
-module.exports = server;
+module.exports = app;
+
